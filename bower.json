@@ -1,0 +1,23 @@
+{
+    "name": "Umber",
+    "version": "0.0.1",
+    "description": "",
+    "main": "",
+    "authors": [
+    "scottwo <scott.w.ogden@gmail.com>"
+    ],
+    "license": "MIT",
+    "moduleType": [],
+    "homepage": "",
+    "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+    ],
+    "dependencies": {
+        "angular": "~1.2",
+        "angular-ui-router": "0.2.15"
+    }
+}

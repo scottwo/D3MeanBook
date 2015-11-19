@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html ng-app="example">
+    <head>
+        <title><%= title %></title>
+    </head>
+    <body>
+        <% if ( userFullName ) { %>
+            <h2>Hello <%=userFullName%></h2>
+            <a href="/signout">Sign out</a>
+        <% } else { %>
+            <h2>Welcome</h2>
+            <a href="/signup">Signup</a>
+            <a href="/signin">Signin</a>
+        <% } %>
+        
+        <section ui-view></section>
+        
+        <script type="text/javascript" src="lib/angular/angular.js"></script>
+        <script src="lib/angular-ui-router/release/angular-ui-router.js"></script>
+        <script type="text/javascript" src="application.js"></script>
+        <script src="/example/example.client.module.js"></script>
+        <script src="/example/controller/example.client.controller.js"></script>
+        <script src="/example/example.client.routes.js"></script>
+        
+    </body>
+</html>
