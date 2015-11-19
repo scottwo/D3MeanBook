@@ -1,14 +1,8 @@
-angular.module('example', ['ui.router', 'example'])
+angular.module('example', ['ui.router', 'example', 'users'])
 
-    .config(['$stateProvider', '$urlRouterProvider', '$locationProvider', function($stateProvider, $urlRouterProvider, $locationProvder){
+    .config(['$locationProvider', function($locationProvder){
     
         $locationProvder.hashPrefix('!');
     
-        $urlRouterProvider.otherwise('/')
-        
-        $stateProvider
-            .state('example', {
-                url: '/',
-                templateUrl: 'example/views/example.client.view.html'
-            })
+        if (window.location.hash === '#_=_') window.location.hash = '#!';
     }])

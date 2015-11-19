@@ -20,7 +20,7 @@ module.exports = function(app) {
     app.route('/signin')
         .get(users.renderSignin)
         .post(passport.authenticate('local', {
-            successRedirect: '/',
+            successRedirect: '/#!',
             failureRedirect: '/signin',
             failureFlash: true
         }));
@@ -33,7 +33,7 @@ module.exports = function(app) {
     
     app.get('/oauth/facebook/callback', passport.authenticate('facebook', {
         failureRedirect: '/signin',
-        successRedirect: '/'
+        successRedirect: '/#!'
     }));
     
     app.get('/oauth/google', passport.authenticate('google', {
@@ -46,7 +46,7 @@ module.exports = function(app) {
     
     app.get('/oauth/google/callback', passport.authenticate('google', {
         failureRedirect: '/signin',
-        successRedirect: '/'
+        successRedirect: '/#!'
     }));
     
 };
