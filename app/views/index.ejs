@@ -2,6 +2,10 @@
 <html ng-app="example">
     <head>
         <title><%= title %></title>
+        <link rel="stylesheet" href="/styles/styles.css"/>
+        <script src="lib/d3/d3.js" charset="utf-8"></script>
+        <script src="/lib/geometry.js"></script>
+        <script src="lib/jquery/dist/jquery.js"></script>
     </head>
     <body>
         <% if ( user ) { %>
@@ -12,7 +16,7 @@
             <a href="/signin">Signin</a>
         <% } %>
         
-        <section ui-view></section>
+        <div ui-view></div>
         
         <script type="text/javascript">
             window.user = <%- user || 'null'  %>;
@@ -26,6 +30,8 @@
         <script src="/example/example.client.routes.js"></script>
         <script src="/users/users.client.module.js"></script>
         <script src="/users/services/authentication.client.service.js"></script>
-        
+        <script src="/d3/d3.client.module.js"></script>
+        <script src="/d3/d3.client.factory.js"></script>
+        <script src="/example/draw-cricles.client.directive.js"></script>
     </body>
 </html>

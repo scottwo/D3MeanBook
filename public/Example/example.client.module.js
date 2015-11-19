@@ -1,4 +1,4 @@
-angular.module('example', ['ui.router', 'example', 'users'])
+angular.module('example', ['ui.router', 'example', 'users', 'd3'])
 
     .config(['$locationProvider', function($locationProvder){
     
