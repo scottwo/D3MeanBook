@@ -100,18 +100,19 @@ var getErrorMessage = function(err) {
 //    res.redirect('/');
 //};
 
-exports.create = function(req, res, next) {
+exports.createNode = function(req, res, next) {
     var node = new Node(req.body);
+    node._id = 1;
     node.save(function(err){
         if(err){
             return next(err);
         } else {
-            res.json(user);
+            res.json(node);
         }
     })
 }
 
-exports.list = function(req, res, next) {
+exports.getNodes = function(req, res, next) {
     User.find({}, 'username email', function(err, users){
         if(err){
             return next(err);

@@ -17,7 +17,7 @@ angular.module('example')
         this.createNode = function(nodeObj){
             
             $http.post('/api/nodes', nodeObj)
-                .then()
+                .then(function(){});
         }
         
     }])

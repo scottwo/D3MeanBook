@@ -18,7 +18,8 @@ angular.module('example')
                         text: "Television Shows"
                     },
                     {
-                        text: "Books"
+                        text: "Books",
+                        imgUrl: "http://38.media.tumblr.com/avatar_e0593f588ae7_128.png"
                     },
                     {
                         text: "Fanfic"
@@ -30,8 +31,6 @@ angular.module('example')
                         text: "Family Members"
                     }
                ];
-
-
 
                 var documentHeight = $(window).height();
                 var documentWidth = $(window).width();
@@ -73,7 +72,15 @@ angular.module('example')
                             return rotatedPoints[i].y; //math to find the y-coord based on i and dataArray.length
                         })
                        .attr("r", 40)
-                       .style("background-color", "blue");
+                        .attr("xlink:href", "http://38.media.tumblr.com/avatar_e0593f588ae7_128.png"
+//                    function(d){
+//                            if(d.imgUrl){
+//                                return "url('http://38.media.tumblr.com/avatar_e0593f588ae7_128.png')"
+//                            } else {
+//                                return "blue";
+//                            }
+//                        }
+                );
 
                     text.attr("x", function(d, i){return rotatedPoints[i].x - 35})
                         .attr("y", function(d, i){return rotatedPoints[i].y})
