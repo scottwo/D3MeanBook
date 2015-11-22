@@ -8,6 +8,7 @@ angular.module('example')
             .state('example', {
                 url: '/',
                 templateUrl: 'example/views/example.client.view.html'
+
             })
             
     }])

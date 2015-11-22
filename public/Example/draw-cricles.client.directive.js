@@ -1,37 +1,19 @@
 angular.module('example')
 
-    .directive('drawCircles', ['d3Service', '$window', function(d3Service, $window) {
+    .directive('drawCircles', ['d3Service', '$window', 'nodeService', function(d3Service, $window, nodeService) {
         
         return {
             restrict: 'EA',
             scope: {},
             link: function(scope, elements, attributes){
                 d3Service.d3().then(function(d3){
-                var dataArray = [
-                    {
-                        text: "Cats"                
-                    },
-                    {
-                        text: "Dogs"
-                    },
-                    {
-                        text: "Television Shows"
-                    },
-                    {
-                        text: "Books",
-                        imgUrl: "http://38.media.tumblr.com/avatar_e0593f588ae7_128.png"
-                    },
-                    {
-                        text: "Fanfic"
-                    },
-                    {
-                        text: "Food"
-                    },
-                    {
-                        text: "Family Members"
-                    }
-               ];
-
+                    
+                function getData(){
+                    nodeService.getNodes().then(function(res){
+                        var dataArray = res.data;
+                    
+                
+                    
                 var documentHeight = $(window).height();
                 var documentWidth = $(window).width();
 
@@ -84,7 +66,7 @@ angular.module('example')
 
                     text.attr("x", function(d, i){return rotatedPoints[i].x - 35})
                         .attr("y", function(d, i){return rotatedPoints[i].y})
-                        .text(function(d){return d.text;})
+                        .text(function(d, i){return d[i].content.text;})
                         .attr("fill", "white");
                 }
                 drawCircles();
@@ -137,7 +119,7 @@ angular.module('example')
 //                    .text(function(d){return d.text;})
 //                    .attr("fill", "white");;
 //            }
-                                    }
+                });}}
                                    )
             }
         }

@@ -102,22 +102,24 @@ var getErrorMessage = function(err) {
 
 exports.createNode = function(req, res, next) {
     var node = new Node(req.body);
-    node._id = 1;
     node.save(function(err){
         if(err){
             return next(err);
         } else {
-            res.json(node);
+            Node.find({}, function(err, data){
+                res.json(data);
+            });
+//            res.json(node.find());
         }
     })
 }
 
 exports.getNodes = function(req, res, next) {
-    User.find({}, 'username email', function(err, users){
+    Node.find({}, '', function(err, nodes){
         if(err){
             return next(err);
         } else {
-            res.json(users);
+            res.json(nodes);
         }
     });
 };

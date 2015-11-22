@@ -2,22 +2,28 @@ angular.module('example')
 
     .service('nodeService', ['$http', '$q', function($http, $q){
     
-        var dfd = $q.defer();
+        
         
         this.getNodes = function(){
+            var dfd = $q.defer();
             $http.get('/api/nodes')
-                .then(function(err){
+                .then(function(data){
+                    dfd.resolve(data);
+                }, function(err){
                     if(err) throw err;
-                }, function(data){
-                    console.log(data);
                 })
-        
+            return dfd.promise;
         }
         
         this.createNode = function(nodeObj){
-            
+            var dfd = $q.defer();
+            //Need to add _id before I send a new node.
             $http.post('/api/nodes', nodeObj)
-                .then(function(){});
+                .then(function(res){
+                    console.log(res);
+                    dfd.resolve(res.data);
+                });
+            return dfd.promise;
         }
         
     }])
