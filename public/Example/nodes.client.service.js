@@ -20,7 +20,6 @@ angular.module('example')
             //Need to add _id before I send a new node.
             $http.post('/api/nodes', nodeObj)
                 .then(function(res){
-                    console.log(res);
                     dfd.resolve(res.data);
                 });
             return dfd.promise;
