@@ -31,7 +31,8 @@ angular.module('example')
                 $scope.nodeObj._id = $scope.nodesData[$scope.nodesData.length - 1]._id + 1;
             }
             $scope.nodeObj.parentNode = [1];
-            $scope.nodeObj.parentXY = {x: ($(window).width()) / 2, y: ($(window).height()) / 2}
+            $scope.nodeObj.parentXY = {x: documentWidth / 2, y: documentHeight / 2};
+            $scope.nodeObj.nodeXY = {x: '', y: ''};
             nodeService.createNode($scope.nodeObj).then(function(res){
                 $scope.nodesData = res;
                 drawCircles($scope.nodesData);
@@ -77,12 +78,18 @@ angular.module('example')
             //Loop through each group and calculate their xys.
             for(var i = 0; i < sortedDataArray.length; i++) {
                 for(var j = 0; j < sortedDataArray[i].length; j++) {
-                    var topPoint = g.point(sortedDataArray[i][j].parentXY.x, sortedDataArray[i][j].parentXY.y - 40);
+                    var rotatedPoint;
+                    var topPoint = g.point(sortedDataArray[i][j].parentXY.x, sortedDataArray[i][j].parentXY.y - 200);
                     var origin = g.point(sortedDataArray[i][j].parentXY.x, sortedDataArray[i][j].parentXY.y);
-                    var rotationAngle = (360 - (i * (360 / (sortedDataArray[i].length)))); 
-                    dataArray[i].nodeXY = topPoint.rotate(origin, rotationAngle);
-//                    dataArray[i].nodeXY.x = rotatedPoint.x;
-//                    dataArray[i].nodeXY.y = rotatedPoint.y;
+                    var rotationAngle = (360 - (j * (360 / (sortedDataArray[i].length - 1)))); 
+                    rotatedPoint = topPoint.rotate(origin, rotationAngle);
+                    for (var k = 0; k < dataArray.length; k++) {    
+                        if(sortedDataArray[i][j]._id === dataArray[k]._id){
+                            dataArray[k].nodeXY.x = rotatedPoint.x;
+                            dataArray[k].nodeXY.y = rotatedPoint.y;
+                            break;
+                        }
+                    }
                 }
             }   
         }
@@ -97,7 +104,7 @@ angular.module('example')
         var canvas = d3.select(".canvas")          //Does not update when window is resized.
             .append("svg")
             .attr("width", "100%")
-            .attr("height", "100%")
+            .attr("height", "140%")
             .style("background", "lightgrey");
 
         var centralNode = d3.select("svg")
