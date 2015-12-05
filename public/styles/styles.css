@@ -1,5 +1,69 @@
-div {
-    height: 600px;
+body {
+    background-color: #bbcbdb;
+    width: 100%;
+}
+
+div.container {
+    height: 800px;
+}
+
+div.mainNav {
+    background-color: #6b4423;
+    height: 10%;
+    width: 100%;
+    display: inline-block;
+}
+
+div.mainView {
+    height: 80%;
+    position: relative;
+    margin-left: -5px;
+    border: 5px inset lightgrey;
+	border-radius: 5px;
+}
+
+div img.mainLogo {
+    height: 80px;
+    float: left;
+}
+
+div#umberTitle {
+    display: inline-block;
+    height: 100%;
+    width: 78%;
+    vertical-align: top;
+    color: white;
+}
+
+#umberTitle span{
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    margin: 30px 46%;
+}
+
+div.userCorner {
+    float: right;
+    height: 100%;
+    display: inline-block;
+    vertical-align: top;
+    color: white;
+    text-shadow: 1px 1px black;
+}
+
+#userGreeting {
+    display: inline-block;
+    margin: 30px auto;
+    vertical-align: top;
+}
+
+.userCorner .md-button {
+    background: #e0cda7;
+    margin: 20px 5px;
+}
+
+div{
+
 }
 
 section {

@@ -79,7 +79,7 @@ angular.module('example')
                 for(var j = 0; j < sortedDataArray[i].length; j++) {
                     var topPoint = g.point(sortedDataArray[i][j].parentXY.x, sortedDataArray[i][j].parentXY.y - 40);
                     var origin = g.point(sortedDataArray[i][j].parentXY.x, sortedDataArray[i][j].parentXY.y);
-                    var rotationAngle = (360 - (i * (360 / (sortedDataArray[i].length)))); 
+                    var rotationAngle = (360 - (i * (360 / (sortedDataArray[j].length)))); 
                     dataArray[i].nodeXY = topPoint.rotate(origin, rotationAngle);
 //                    dataArray[i].nodeXY.x = rotatedPoint.x;
 //                    dataArray[i].nodeXY.y = rotatedPoint.y;
@@ -98,7 +98,7 @@ angular.module('example')
             .append("svg")
             .attr("width", "100%")
             .attr("height", "100%")
-            .style("background", "lightgrey");
+            .style("background", "white");
 
         var centralNode = d3.select("svg")
             .append("rect")
@@ -109,7 +109,7 @@ angular.module('example')
                 height: 40,
                 rx: 20,
                 ry: 20,
-                fill: "brown",
+                fill: "#6b4423",
                 focus: true
             })
         

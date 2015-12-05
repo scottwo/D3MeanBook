@@ -3,11 +3,14 @@
     <head>
         <title><%= title %></title>
         <link rel="stylesheet" href="/styles/styles.css"/>
+        <link rel="stylesheet" href="lib/angular-material/angular-material.css" />
         <script src="lib/d3/d3.js" charset="utf-8"></script>
         <script src="/lib/geometry.js"></script>
         <script src="lib/jquery/dist/jquery.js"></script>
     </head>
     <body>
+        <div class="container">
+<!--
         <% if ( user ) { %>
             <a href="/signout">Sign out</a>
         <% } else { %>
@@ -15,9 +18,19 @@
             <a href="/signup">Signup</a>
             <a href="/signin">Signin</a>
         <% } %>
-        
-        <div ui-view></div>
-        
+-->
+            <div class="mainNav">
+                <img class="mainLogo" src="images/umberlogo.png"/>
+                <div id="umberTitle">
+                    <span>Umber Title</span>
+                </div>
+                <div class="userCorner">
+                    <span ng-model="username" id="userGreeting">Hello, Guest!</span>
+                    <md-button class="md-button md-raised">Login</md-button>
+                </div>
+            </div>
+            <div class="mainView" ui-view></div>
+        </div>
         <script type="text/javascript">
             window.user = <%- user || 'null'  %>;
         </script>
@@ -25,6 +38,7 @@
         <script type="text/javascript" src="lib/angular/angular.js"></script>
         <script src="lib/angular-ui-router/release/angular-ui-router.js"></script>
         <script type="text/javascript" src="application.js"></script>
+        <script src="lib/angular-material/angular-material.js"></script>
         <script src="/example/example.client.module.js"></script>
         <script src="/example/controller/example.client.controller.js"></script>
         <script src="/example/example.client.routes.js"></script>
