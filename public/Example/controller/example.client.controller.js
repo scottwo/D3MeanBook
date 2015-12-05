@@ -81,12 +81,10 @@ angular.module('example')
                     var rotatedPoint;
                     var topPoint = g.point(sortedDataArray[i][j].parentXY.x, sortedDataArray[i][j].parentXY.y - 200);
                     var origin = g.point(sortedDataArray[i][j].parentXY.x, sortedDataArray[i][j].parentXY.y);
-<<<<<<< HEAD
-                    var rotationAngle = (360 - (i * (360 / (sortedDataArray[j].length)))); 
-                    dataArray[i].nodeXY = topPoint.rotate(origin, rotationAngle);
+//                    var rotationAngle = (360 - (i * (360 / (sortedDataArray[i].length)))); 
+//                    dataArray[i].nodeXY = topPoint.rotate(origin, rotationAngle);
 //                    dataArray[i].nodeXY.x = rotatedPoint.x;
 //                    dataArray[i].nodeXY.y = rotatedPoint.y;
-=======
                     var rotationAngle = (360 - (j * (360 / (sortedDataArray[i].length - 1)))); 
                     rotatedPoint = topPoint.rotate(origin, rotationAngle);
                     for (var k = 0; k < dataArray.length; k++) {    
@@ -96,7 +94,6 @@ angular.module('example')
                             break;
                         }
                     }
->>>>>>> 39326c91cfef38b624f638d4cfa6612b3a7756f7
                 }
             }   
         }
@@ -111,13 +108,8 @@ angular.module('example')
         var canvas = d3.select(".canvas")          //Does not update when window is resized.
             .append("svg")
             .attr("width", "100%")
-<<<<<<< HEAD
             .attr("height", "100%")
             .style("background", "white");
-=======
-            .attr("height", "140%")
-            .style("background", "lightgrey");
->>>>>>> 39326c91cfef38b624f638d4cfa6612b3a7756f7
 
         var centralNode = d3.select("svg")
             .append("rect")
