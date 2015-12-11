@@ -1,7 +1,8 @@
 angular.module('example')
     
     .controller('ExampleController', ['$scope', 'Authentication', 'nodeService', function($scope, Authentication, nodeService){
-    
+        
+        var newNode = {};
         $scope.name = Authentication.user ? Authentication.user.fullName : 'Mean Application';
         $scope.nodeObj = {
             content: {
@@ -11,7 +12,24 @@ angular.module('example')
         
         $scope.getNodesData = function(){
             nodeService.getNodes().then(function(res){
-                
+                if (res.data.length === 0) {
+                    res.data.push({
+                        _id: 0,
+                        content: {
+                            text: "Scott"
+                        },
+                        parentNode: [0],
+                        parentXY: {
+                            x: documentWidth / 2,
+                            y: documentHeight / 2
+                        },
+                        nodeXY: {
+                            x: documentWidth / 2,
+                            y: documentHeight / 2
+                        }
+                    });
+                    
+                };
                 $scope.nodesData = res.data;
                 drawCircles($scope.nodesData);
                 drawText($scope.nodesData);
@@ -26,15 +44,15 @@ angular.module('example')
         
         $scope.addNode = function(){
             if($scope.nodesData.length === 0){
-                $scope.nodeObj._id = 1;
+                newNodes._id = 0;
+            } else if ($scope.nodesData.length === 1){
+                newNode._id = 1;
             } else {
-                $scope.nodeObj._id = $scope.nodesData[$scope.nodesData.length - 1]._id + 1;
+                newNode._id = $scope.nodesData[$scope.nodesData.length - 1]._id + 1;
             }
-            $scope.nodeObj.parentNode = [1];
-            $scope.nodeObj.parentXY = {x: documentWidth / 2, y: documentHeight / 2};
-            $scope.nodeObj.nodeXY = {x: '', y: ''};
-            nodeService.createNode($scope.nodeObj).then(function(res){
-                $scope.nodesData = res;
+            $scope.nodesData.push(newNode);
+            nodeService.createNode(newNode).then(function(res){
+//                $scope.nodesData = res;
                 drawCircles($scope.nodesData);
                 drawText($scope.nodesData);
             });
@@ -63,6 +81,7 @@ angular.module('example')
                     sortedDataArray[0].push(dataArray[0]);
                 }
                 for (var j = 0; j <= sortedDataArray.length; j++) {
+                    if(i === 0){ break;}
                     if (dataArray[i].parentNode[0] == sortedDataArray[j][0].parentNode[0]) {
                         sortedDataArray[j].push(dataArray[i]);
                         break;
@@ -74,17 +93,12 @@ angular.module('example')
                     }
                 }
             }
-//            console.log(sortedDataArray); 
             //Loop through each group and calculate their xys.
-            for(var i = 0; i < sortedDataArray.length; i++) {
+            for(var i = 1; i < sortedDataArray.length; i++) {
                 for(var j = 0; j < sortedDataArray[i].length; j++) {
                     var rotatedPoint;
                     var topPoint = g.point(sortedDataArray[i][j].parentXY.x, sortedDataArray[i][j].parentXY.y - 200);
                     var origin = g.point(sortedDataArray[i][j].parentXY.x, sortedDataArray[i][j].parentXY.y);
-//                    var rotationAngle = (360 - (i * (360 / (sortedDataArray[i].length)))); 
-//                    dataArray[i].nodeXY = topPoint.rotate(origin, rotationAngle);
-//                    dataArray[i].nodeXY.x = rotatedPoint.x;
-//                    dataArray[i].nodeXY.y = rotatedPoint.y;
                     var rotationAngle = (360 - (j * (360 / (sortedDataArray[i].length - 1)))); 
                     rotatedPoint = topPoint.rotate(origin, rotationAngle);
                     for (var k = 0; k < dataArray.length; k++) {    
@@ -111,23 +125,23 @@ angular.module('example')
             .attr("height", "100%")
             .style("background", "white");
 
-        var centralNode = d3.select("svg")
-            .append("rect")
-            .attr({
-                x: documentWidth / 2 - 20,
-                y: documentHeight / 2 - 20,
-                width: 40,
-                height: 40,
-                rx: 20,
-                ry: 20,
-                fill: "#6b4423",
-                focus: true
-            })
-        
-        centralNode.on("click", function(){
-            $scope.nodeObj.content.text = "Scott";
-            $scope.addNode();
-        })
+//        var centralNode = d3.select("svg")
+//            .append("rect")
+//            .attr({
+//                x: documentWidth / 2 - 20,
+//                y: documentHeight / 2 - 20,
+//                width: 40,
+//                height: 40,
+//                rx: 20,
+//                ry: 20,
+//                fill: "#6b4423",
+//                focus: true
+//            })
+//        
+//        centralNode.on("click", function(){
+//            $scope.nodeObj.content.text = "Scott";
+//            $scope.addNode();
+//        })
 
         var drawCircles = function(dataArray){
             calculatePointsOnCircle(dataArray);
@@ -145,9 +159,10 @@ angular.module('example')
                 .style("fill","blue")
                 .transition()
                 .duration(1500)
-                .ease('elastic')
+                .ease("elastic")
                 .attr("cx", function(d, i) { return dataArray[i].nodeXY.x })
-                .attr("cy", function(d, i) { return dataArray[i].nodeXY.y });
+                .attr("cy", function(d, i) { return dataArray[i].nodeXY.y })
+                .attr("nodeId", function(d, i) {return dataArray[i]._id});
 
 
             circles
@@ -160,7 +175,7 @@ angular.module('example')
             circles.on("mouseover",function(){
                 d3.select(this).transition()
                     .ease("linear")
-                    .attr("r", 50)
+                    .attr("r", 45)
                     .style("fill", "yellow");
                 })
                 .on("mouseout", function(){
@@ -169,11 +184,13 @@ angular.module('example')
                         .attr("r", 40)
                         .style("fill", "blue");
                 })
-                .on("click", function(e){
-                    var el = e.target;
-                    if(!el.getAttribute("focus")){
-                                        //Set the el as the focus and transition everything around it. (probably a function)
-                    }
+                .on("click", function(){
+                    newNode.parentXY = {x: this.getAttribute('cx'), y: this.getAttribute('cy')};
+                    newNode.parentNode = this.getAttribute('nodeId');
+                    newNode.content = {
+                        text: "Scott"
+                    };
+                    $scope.addNode();
                 });
         }
 
